@@ -1,13 +1,10 @@
-<html>
-    <head>
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
-        <title>Home Page - my blog</title>
-        {% endif %}
-    </head>
-    <body>
-        <h1>Hello, {{user_template.name}} !</h1>
-    </body>
-</html>
+{% extends "base.html" %}
 
+{% block content %}
+    <h1>Hello, {{user_template.name}} !</h1>
+    {% for p in posts %}
+    <div>
+        <p>{{ p.author }} says: <b>{{ p.body }}</b></p>
+    </div>
+    {% endfor %}
+{% endblock %}
