@@ -4,6 +4,8 @@ from flask import Flask
 # create an instance of Flask class
 # __name__ is a predefined setup variable
 myapp_obj = Flask(__name__)
-
+myapp_obj.config.from_mapping(
+     SECRET_KEY = 'you-will-never-guess'
+)
 
 from app import routes
