@@ -1,6 +1,7 @@
 from flask import render_template
 
 from app import myapp_obj
+from app.forms import LoginForm
 
 
 # different URL the app will implement
@@ -20,3 +21,9 @@ def hello():
     ]
 
     return render_template('hello.html', user_template=user, posts=posts)
+
+@myapp_obj.route("/login")
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Sign In', form=form)
+
