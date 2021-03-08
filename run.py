@@ -9,7 +9,16 @@ myapp_obj = Flask(__name__)
 @myapp_obj.route("/")
 # called view function
 def hello():
-    return "Hello World!"
+    # return HTML string
+    return '''
+    <html>
+    <head>
+        <title>Home Page - my blog</title>
+    </head>
+    <body>
+        <h1>Hello, Miguel !</h1>
+    </body>
+    </html>'''
 
 myapp_obj.run()
 
