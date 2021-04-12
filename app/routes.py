@@ -1,4 +1,7 @@
 from flask import render_template, flash, redirect
+from flask_login import current_user, login_user
+from flask_login import logout_user
+from flask_login import login_required
 
 from app import myapp_obj
 from app.forms import LoginForm
@@ -36,9 +39,30 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect('/login')
-        
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect('/')
+        # let flask_login library know what user logged int
+        # it also means that their password was correct
+        login_user(user, remember=form.remember_me.data)
+      
+        # return to page before user got asked to login
+        # for example, if user tried to access a wedpage called profile, but since they
+        # weren't logged in they would get redirected to login page. After they log in
+        # the user will be redirected to their previous request, which would be the profile
+        # page in this case.
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+
+        return redirect(next_page)
+
     return render_template('login.html', title='Sign In', form=form)
 
+@myapp_obj.route("/req")
+# user needs to be logged in to see this page
+# needs to be user route!
+@login_required
+# called view function
+def req():
+    return '''<html><body>
+    User needs to be logged in
+    </body>
+    </html>'''

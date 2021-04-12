@@ -1,6 +1,8 @@
 import os
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
 
 # include Flask class from file flask
 from flask import Flask
@@ -19,5 +21,9 @@ myapp_obj.config.from_mapping(
 )
 
 db = SQLAlchemy(myapp_obj)
+
+login = LoginManager(myapp_obj)
+# right side is the function that's called to login users
+login.login_view = 'login'
 
 from app import routes, models
